@@ -22,12 +22,37 @@
 #include <glm/trigonometric.hpp>
 #include <math.h>
 
+#include "vbo.hpp"
+
+vertex vertices[] = {
+    vertex { -0.5f, -0.5f, 0.0f, 0.0f, 0.0f },
+    vertex {  0.5f, -0.5f, 0.0f, 1.0f, 0.0f },
+    vertex {  0.0f,  0.5f, 0.0f, 0.5f, 1.0f },
+};
+
 int main(int argc, char** argv)
 {
     GLFWwindow* window = setup();
 
+    unsigned int VAO;
+    glGenVertexArrays(1, &VAO);
+    glBindVertexArray(VAO);
+
+    VBO vbo (vertices, 3);
+    vbo.use();
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)0);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+
+    Shader shader ("shaders/vertex.glsl", "shaders/fragment.glsl");
+    shader.use();
+
     while (!glfwWindowShouldClose(window))
     {
+        glClear(GL_COLOR_BUFFER_BIT);
+        glClearColor(0.1f, 0.7f, 0.2f, 1.0f);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
         glfwSwapBuffers(window);
         glfwPollEvents();
 
