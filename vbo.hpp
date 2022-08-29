@@ -1,7 +1,8 @@
 #pragma once
 #include "vertex.hpp"
+#include "usable.hpp"
 
-class VBO
+class VBO : public Usable
 {
     public:
         unsigned int ID;

@@ -8,7 +8,9 @@
 #include <sstream>
 #include <iostream>
 
-class Shader
+#include "usable.hpp"
+
+class Shader : public Usable
 {
 public:
     unsigned int ID;
