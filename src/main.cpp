@@ -11,8 +11,7 @@
 #include "util.hpp"
 #include "shader_s.hpp"
 
-// image loading
-#define STB_IMAGE_IMPLEMENTATION
+// image loading #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
 
 // math
@@ -72,11 +71,13 @@ int main(int argc, char** argv)
         float deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        glClear(GL_COLOR_BUFFER_BIT);
-        glClearColor(0.1f, 0.7f, 0.2f, 1.0f);
         cam.processInput(window, deltaTime);
         cam.mouse_callback(mouseXPos, mouseYPos);
         cam.Update();
+
+
+        glClear(GL_COLOR_BUFFER_BIT);
+        glClearColor(0.1f, 0.7f, 0.2f, 1.0f);
         glDrawArrays(GL_TRIANGLES, 0, 3);
         glfwSwapBuffers(window);
         glfwPollEvents();
