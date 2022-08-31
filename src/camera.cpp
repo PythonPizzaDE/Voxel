@@ -36,10 +36,6 @@ Camera::Camera(glm::vec3 position, float pitch, float yaw, glm::vec3 up, float s
 
     this->viewMatrix = glm::lookAt(position, position + front, up);
     this->projectionMatrix = glm::perspective(glm::radians(fov), 1920.0f / 1080.0f, 0.1f, 100.0f);
-
-    std::cout << glm::to_string(this->viewMatrix) << std::endl;
-    std::cout << glm::to_string(this->projectionMatrix) << std::endl;
-
 }
 
 void Camera::Update()
@@ -52,8 +48,6 @@ void Camera::Update()
 
     glUniformMatrix4fv(viewMatrixLocation, 1, GL_FALSE, glm::value_ptr(viewMatrix));
     glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
-
-    std::cout << "pitch = " << pitch << " yaw = " << yaw << std::endl;
 }
 
 void Camera::processInput(GLFWwindow* window, float delta)
