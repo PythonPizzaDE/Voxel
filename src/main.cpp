@@ -44,6 +44,8 @@ int main(int argc, char** argv)
 {
     GLFWwindow* window = util::setup();
 
+    glfwSetCursorPosCallback(window, mouse_callback);
+
     unsigned int VAO;
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
@@ -58,8 +60,8 @@ int main(int argc, char** argv)
     Shader shader ("shaders/vertex.glsl", "shaders/fragment.glsl");
     shader.use();
 
-    // (glm::vec3 position, glm::vec3 front, glm::vec3 up, float speed, float mouse_sensitivity, float fov, GLFWwindow* window, unsigned int shader)
-    Camera cam (glm::vec3(0.0f, 0.0f, 2.0f), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f), 5.0f, 0.01f, 45.0f, window, shader.ID);
+    // glm::vec3 position, float pitch, float yaw, glm::vec3 up, float speed, float mouse_sensitivity, float fov, GLFWwindow* window, unsigned int shader
+    Camera cam (glm::vec3(0.0f, 0.0f, 3.0f), 0.0f, -90.0f, glm::vec3(0.0f, 1.0f, 0.0f), 5.0f, 0.01f, 45.0f, window, shader.ID);
 
     float currentFrame = glfwGetTime();
     float lastFrame = 0.0f;

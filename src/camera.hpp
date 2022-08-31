@@ -15,7 +15,7 @@
 class Camera
 {
     public:
-        Camera(glm::vec3 position, glm::vec3 front, glm::vec3 up, float speed, float mouse_sensitivity, float fov, GLFWwindow* window, unsigned int shader);
+        Camera(glm::vec3 position, float pitch, float yaw, glm::vec3 up, float speed, float mouse_sensitivity, float fov, GLFWwindow* window, unsigned int shader);
 
         void processInput(GLFWwindow* window, float delta);
         void mouse_callback(double xpos, double ypos);

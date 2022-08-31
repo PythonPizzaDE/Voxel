@@ -3,6 +3,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/trigonometric.hpp>
+#include <glm/gtx/string_cast.hpp>
 #include <math.h>
 
 #include "math_util.hpp"
@@ -16,10 +17,15 @@
 // Camera class
 #include "camera.hpp"
 
-Camera::Camera(glm::vec3 position, glm::vec3 front, glm::vec3 up, float speed, float mouse_sensitivity, float fov, GLFWwindow* window, unsigned int shader)
+#include <iostream>
+
+Camera::Camera(glm::vec3 position, float pitch, float yaw, glm::vec3 up, float speed, float mouse_sensitivity, float fov, GLFWwindow* window, unsigned int shader)
 {
+    this->pitch = pitch;
+    this->yaw = yaw;
+
     this->position = position;
-    this->front = front;
+    this->front = direction();
     this->up = up;
     this->speed = speed;
     this->mouse_sensitivity = mouse_sensitivity;
@@ -31,17 +37,23 @@ Camera::Camera(glm::vec3 position, glm::vec3 front, glm::vec3 up, float speed, f
     this->viewMatrix = glm::lookAt(position, position + front, up);
     this->projectionMatrix = glm::perspective(glm::radians(fov), 1920.0f / 1080.0f, 0.1f, 100.0f);
 
-    pitch = 0;
-    yaw = 0;
+    std::cout << glm::to_string(this->viewMatrix) << std::endl;
+    std::cout << glm::to_string(this->projectionMatrix) << std::endl;
+
 }
 
 void Camera::Update()
 {
-    this->viewMatrix = glm::lookAt(position, position + front, up);
-    this->projectionMatrix = glm::perspective(glm::radians(fov), 1920.0f / 1080.0f, 0.1f, 100.0f);
+    viewMatrix = glm::lookAt(position, position + front, up);
+    projectionMatrix = glm::perspective(glm::radians(fov), 1920.0f / 1080.0f, 0.1f, 100.0f);
+
+    /* this->projectionMatrix = glm::mat4(1.0f); */
+    /* this->viewMatrix = glm::mat4(1.0f); */
 
     glUniformMatrix4fv(viewMatrixLocation, 1, GL_FALSE, glm::value_ptr(viewMatrix));
     glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
+
+    std::cout << "pitch = " << pitch << " yaw = " << yaw << std::endl;
 }
 
 void Camera::processInput(GLFWwindow* window, float delta)
@@ -67,7 +79,7 @@ glm::vec3 Camera::direction()
 void Camera::mouse_callback(double xpos, double ypos)
 {
     float xoffset = xpos - lastMouseX;
-    float yoffset = xpos - lastMouseY;
+    float yoffset = ypos - lastMouseY;
 
     lastMouseX = xpos;
     lastMouseY = ypos;

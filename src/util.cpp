@@ -18,6 +18,8 @@ namespace util
         GLFWwindow* window = glfwCreateWindow(1920, 1080, "OpenGL", glfwGetPrimaryMonitor(), nullptr);
         glfwMakeContextCurrent(window);
 
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
         glewExperimental = GL_TRUE;
         glewInit();
 
