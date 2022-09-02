@@ -10,6 +10,7 @@
 // utilities for creating windows etc.
 #include "util.hpp"
 #include "shader_s.hpp"
+#include "block.hpp"
 
 // image loading #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
@@ -24,11 +25,11 @@
 #include "vbo.hpp"
 #include "camera.hpp"
 
-vertex vertices[] = {
-    vertex { -0.5f, -0.5f, 0.0f, 0.0f, 0.0f },
-    vertex {  0.5f, -0.5f, 0.0f, 1.0f, 0.0f },
-    vertex {  0.0f,  0.5f, 0.0f, 0.5f, 1.0f },
-};
+/* vertex vertices[] = { */
+/*     vertex { -0.5f, -0.5f, 0.0f, 0.0f, 0.0f }, */
+/*     vertex {  0.5f, -0.5f, 0.0f, 1.0f, 0.0f }, */
+/*     vertex {  0.0f,  0.5f, 0.0f, 0.5f, 1.0f }, */
+/* }; */
 
 double mouseXPos;
 double mouseYPos;
@@ -49,8 +50,8 @@ int main(int argc, char** argv)
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
 
-    VBO vbo (vertices, 3);
-    vbo.use();
+    /* VBO vbo (vertices, 3); */
+    /* vbo.use(); */
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)0);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(0);
@@ -65,6 +66,8 @@ int main(int argc, char** argv)
     float currentFrame = glfwGetTime();
     float lastFrame = 0.0f;
 
+    Block block (shader.ID);
+
     while (!glfwWindowShouldClose(window))
     {
         currentFrame = glfwGetTime();
@@ -78,7 +81,18 @@ int main(int argc, char** argv)
 
         glClear(GL_COLOR_BUFFER_BIT);
         glClearColor(0.1f, 0.7f, 0.2f, 1.0f);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+
+        for (float x = 0; x < 10; x++)
+        {
+            for (float y = 0; y < 10; y++)
+            {
+                for (float z = 0; z < 10; z++)
+                {
+                    block.render(glm::vec3(x, y, z));
+                }
+            }
+        }
+
         glfwSwapBuffers(window);
         glfwPollEvents();
 
