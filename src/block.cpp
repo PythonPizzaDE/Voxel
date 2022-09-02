@@ -59,7 +59,5 @@ void Block::render(glm::vec3 position)
     model = glm::translate(model, position);
 
     glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, glm::value_ptr(model));
-    std::cout << "draw it" << std::endl;
     glDrawArrays(GL_TRIANGLES, 0, 36);
-    std::cout << "finished drawing" << std::endl;
 }

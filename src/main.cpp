@@ -50,15 +50,17 @@ int main(int argc, char** argv)
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
 
+    Shader shader ("shaders/vertex.glsl", "shaders/fragment.glsl");
+    shader.use();
+
     /* VBO vbo (vertices, 3); */
     /* vbo.use(); */
+    Block block (shader.ID);
+
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)0);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
-
-    Shader shader ("shaders/vertex.glsl", "shaders/fragment.glsl");
-    shader.use();
 
     // glm::vec3 position, float pitch, float yaw, glm::vec3 up, float speed, float mouse_sensitivity, float fov, GLFWwindow* window, unsigned int shader
     Camera cam (glm::vec3(0.0f, 0.0f, 3.0f), 0.0f, -90.0f, glm::vec3(0.0f, 1.0f, 0.0f), 5.0f, 0.01f, 45.0f, window, shader.ID);
@@ -66,7 +68,6 @@ int main(int argc, char** argv)
     float currentFrame = glfwGetTime();
     float lastFrame = 0.0f;
 
-    Block block (shader.ID);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -81,6 +82,8 @@ int main(int argc, char** argv)
 
         glClear(GL_COLOR_BUFFER_BIT);
         glClearColor(0.1f, 0.7f, 0.2f, 1.0f);
+
+        std::cout << 1.0f / deltaTime << std::endl;
 
         for (float x = 0; x < 10; x++)
         {
