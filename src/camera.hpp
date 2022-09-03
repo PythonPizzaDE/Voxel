@@ -32,6 +32,7 @@ class Camera
         float speed;
         float mouse_sensitivity;
         float fov;
+        bool wireframe;
 
         // 2D window stuff
         float lastMouseX = (float)(1920 / 2);

@@ -21,6 +21,8 @@
 
 Camera::Camera(glm::vec3 position, float pitch, float yaw, glm::vec3 up, float speed, float mouse_sensitivity, float fov, GLFWwindow* window, unsigned int shader)
 {
+    wireframe = false;
+
     this->pitch = pitch;
     this->yaw = yaw;
 
@@ -45,6 +47,11 @@ void Camera::Update()
 
     /* this->projectionMatrix = glm::mat4(1.0f); */
     /* this->viewMatrix = glm::mat4(1.0f); */
+
+    if (wireframe)
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    else
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
     glUniformMatrix4fv(viewMatrixLocation, 1, GL_FALSE, glm::value_ptr(viewMatrix));
     glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
@@ -75,6 +82,11 @@ void Camera::processInput(GLFWwindow* window, float delta)
 
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
         speed -= 5.0 * delta;
+
+    if (glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS)
+        wireframe = true;
+    else
+        wireframe = false;
 }
 
 glm::vec3 Camera::direction()
