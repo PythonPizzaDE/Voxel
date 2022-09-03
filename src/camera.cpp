@@ -63,6 +63,18 @@ void Camera::processInput(GLFWwindow* window, float delta)
 
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         position += glm::normalize(glm::cross(front, up)) * speed * delta;
+
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+        position += up * speed * delta;
+
+    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+        position -= up * speed * delta;
+
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+        speed += 5.0 * delta;
+
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+        speed -= 5.0 * delta;
 }
 
 glm::vec3 Camera::direction()
