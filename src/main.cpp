@@ -68,6 +68,7 @@ int main(int argc, char** argv)
     float currentFrame = glfwGetTime();
     float lastFrame = 0.0f;
 
+    glEnable(GL_DEPTH_TEST);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -80,10 +81,10 @@ int main(int argc, char** argv)
         cam.Update();
 
 
-        glClear(GL_COLOR_BUFFER_BIT);
-        glClearColor(0.1f, 0.7f, 0.2f, 1.0f);
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        std::cout << 1.0f / deltaTime << std::endl;
+        /* std::cout << 1.0f / deltaTime << std::endl; */
 
         for (float x = 0; x < 10; x++)
         {

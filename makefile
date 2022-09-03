@@ -1,5 +1,5 @@
 LIBS = -lGL -lGLEW -lglfw
-CFLAGS = -o build/run 
+CFLAGS = -o build/run
 SRC = $(wildcard ./src/*.cpp)
 
 all:
