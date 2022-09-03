@@ -25,6 +25,8 @@
 #include "vbo.hpp"
 #include "camera.hpp"
 
+#include <vector>
+
 /* vertex vertices[] = { */
 /*     vertex { -0.5f, -0.5f, 0.0f, 0.0f, 0.0f }, */
 /*     vertex {  0.5f, -0.5f, 0.0f, 1.0f, 0.0f }, */
@@ -68,6 +70,9 @@ int main(int argc, char** argv)
     float currentFrame = glfwGetTime();
     float lastFrame = 0.0f;
 
+    std::vector<int> FPS_vec;
+    int FPS = 0;
+
     glEnable(GL_DEPTH_TEST);
 
     while (!glfwWindowShouldClose(window))
@@ -84,7 +89,8 @@ int main(int argc, char** argv)
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        /* std::cout << 1.0f / deltaTime << std::endl; */
+        FPS = (int)(1.0 / deltaTime);
+        FPS_vec.push_back(FPS);
 
         for (float x = 0; x < 10; x++)
         {
@@ -103,6 +109,14 @@ int main(int argc, char** argv)
         if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
             glfwSetWindowShouldClose(window, GL_TRUE);
     }
+
+    int all = 0;
+    for (int fps : FPS_vec)
+    {
+        all += fps;
+    }
+
+    std::cout << all / FPS_vec.size() << std::endl;
 
     util::terminate();
 }
